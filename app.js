@@ -32,12 +32,21 @@ app.get('/err', (req, res) => {
 
 
 // Get list of Todos
-
-// create new TODO
+app.get('/api/todos', (req, res, next) => {
+    if (!req.query.completed) {
+        // if completed query parameter is not provided, return all todos
+        return dataStorage.fetchAll().then(todos => res.json(todos), next); 
+    }
+    const completed = req.query.completed === 'true';
+    dataStorage.fetchByCompleted(completed).then(todos => res.json(todos), next);
+});
 
 // common process for setting and unsetting Completed status
 
 // Completed setting and unsetting for a TODO
+app.route('/api/todos/:id/completed')
+    .put(completedHandler(true))
+    .delete(completedHandler(false));
 
 // delete a TODO
 
