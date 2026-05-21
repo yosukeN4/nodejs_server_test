@@ -1,7 +1,7 @@
 'use strict'
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
-// const dataStorage = require(`./${process.env.npm_lifecycle_event}`);
+const dataStorage = require(`./${process.env.npm_lifecycle_event}`);
 
 const router = express.Router();
 const cookieParser = require('cookie-parser');
@@ -54,6 +54,9 @@ app.post('/api/todos', (req, res, next) => {
 });
 
 // common process for setting and unsetting Completed status
+function completedHandler(completed) {
+    pass;
+}
 
 // Completed setting and unsetting for a TODO
 app.route('/api/todos/:id/completed')
