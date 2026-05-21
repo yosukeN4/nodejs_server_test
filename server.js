@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+
+const { v4: uuidv4 } = require('uuid');
+// const dataStorage = require(`./${process.env.npm_lifecycle_event}`);
+
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 
@@ -22,7 +26,7 @@ app.use(express.urlencoded({ extended: true })); // URLエンコードされた�
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-    res.status(200).send('Hello World!');
+    res.status(200).send('Hora el Mundo!');
 });
 
 app.get('/err', (req, res) => {
@@ -45,6 +49,18 @@ app.get('/api/todos', (req, res) => {
     // completed query parameter is provided, filter todos by completed status
     const completed = req.query.completed === 'true';
     res.json(todos.filter(todo => todo.completed === completed));
+});
+
+// get a TODO by ID
+app.get('/api/todos/:id', (req, res, next) => {
+    const targetId = Number(req.params.id);
+    const todo = todos.find(todo => todo.id === targetId);  
+    if (!todo) {
+        const err = new Error('TODO not found');
+        err.statusCode = 404;
+        return next(err);
+    }
+    res.status(200).json(todo);
 });
 
 
