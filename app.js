@@ -41,6 +41,18 @@ app.get('/api/todos', (req, res, next) => {
     dataStorage.fetchByCompleted(completed).then(todos => res.json(todos), next);
 });
 
+// Create a new TODO
+app.post('/api/todos', (req, res, next) => {
+    const { title } = req.body;
+    if (typeof title !== 'string' || !title) {
+        const err = new Error('title is required');
+        err.statusCode = 400;
+        return next(err);
+    }
+    const todo = { id: uuidv4() /* Generate UUID */, title, completed: false };
+    dataStorage.create(todo).then(() => res.status(201).json(todo), next);
+});
+
 // common process for setting and unsetting Completed status
 
 // Completed setting and unsetting for a TODO
