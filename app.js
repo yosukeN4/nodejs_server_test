@@ -1,0 +1,52 @@
+'use strict'
+const express = require('express');
+const { v4: uuidv4 } = require('uuid');
+// const dataStorage = require(`./${process.env.npm_lifecycle_event}`);
+
+const router = express.Router();
+const cookieParser = require('cookie-parser');
+
+
+app.use(logMiddleware);
+app.use(express.json()); // JSONリクエストのパース
+app.use(express.urlencoded({ extended: true })); // URLエンコードされたリクエストのパース
+app.use(cookieParser());
+
+const app = express();
+
+// Logging middleware
+const logMiddleware = (req, res, next) => {
+    console.log(Date.now(), req.method, req.url);
+    next();
+};
+
+app.get('/', (req, res) => {
+    res.status(200).send('Hora el Mundo!');
+});
+
+app.get('/err', (req, res) => {
+    throw new Error('This is a test error');
+    console.log("err route here");
+    res.status(200).send('error route')
+});
+
+
+// Get list of Todos
+
+// create new TODO
+
+// common process for setting and unsetting Completed status
+
+// Completed setting and unsetting for a TODO
+
+// delete a TODO
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(err.statusCode || 500).json({ error: err.message });
+});
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});
