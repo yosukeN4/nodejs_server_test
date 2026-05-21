@@ -6,19 +6,19 @@ const dataStorage = require(`./${process.env.npm_lifecycle_event}`);
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 
+// Logging middleware
+const logMiddleware = (req, res, next) => {
+    console.log(Date.now(), req.method, req.url);
+    next();
+};
+const app = express();
 
 app.use(logMiddleware);
 app.use(express.json()); // JSONリクエストのパース
 app.use(express.urlencoded({ extended: true })); // URLエンコードされたリクエストのパース
 app.use(cookieParser());
 
-const app = express();
 
-// Logging middleware
-const logMiddleware = (req, res, next) => {
-    console.log(Date.now(), req.method, req.url);
-    next();
-};
 
 app.get('/', (req, res) => {
     res.status(200).send('Hora el Mundo!');
@@ -55,13 +55,13 @@ app.post('/api/todos', (req, res, next) => {
 
 // common process for setting and unsetting Completed status
 function completedHandler(completed) {
-    pass;
+    // write later...
 }
 
 // Completed setting and unsetting for a TODO
-app.route('/api/todos/:id/completed')
-    .put(completedHandler(true))
-    .delete(completedHandler(false));
+// app.route('/api/todos/:id/completed')
+//     .put(completedHandler(true))
+//     .delete(completedHandler(false));
 
 // delete a TODO
 
