@@ -33,11 +33,9 @@ exports.update = async (id, updates) => {
     );
 };
 
-exports.remove = (id) => {
-    console.log("request arrived. this layer.")
-    return unlink(`${__dirname}/${id}.json`)
-    .then(
-        () => id,
-        // if the file doesn't exist, return null, otherwise propagate the error
-        err => err.code === 'ENOENT' ? null : Promise.reject(err)
-    )}
+exports.remove = id => unlink(`${__dirname}/${id}.json`)
+  .then(
+    () => id,
+    // ファイルが存在しない場合はnullを返し、それ以外はそのままエラーにする
+    err => err.code === 'ENOENT' ? null : Promise.reject(err)
+  )
