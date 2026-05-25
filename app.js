@@ -55,15 +55,34 @@ app.post('/api/todos', (req, res, next) => {
 
 // common process for setting and unsetting Completed status
 function completedHandler(completed) {
-    // write later...
+    return (req, res, next) => 
+        dataStorage.update(req.params.id, { completed })
+            .then( todo => {
+                if (todo) {
+                    return res.json(todo);
+            }
+            const err = new Error('Todo not found');
+            err.statusCode = 404;
+            next(err);
+            }, next);
 }
 
 // Completed setting and unsetting for a TODO
-// app.route('/api/todos/:id/completed')
-//     .put(completedHandler(true))
-//     .delete(completedHandler(false));
+app.route('/api/todos/:id/completed')
+    .put(completedHandler(true))
+    .delete(completedHandler(false));
 
 // delete a TODO
+app.delete('/api/todos/:id', (req, res, next) => {
+    dataStorage.remove(req.params.id).then(id => {
+        if (id !== null) {
+            res.status(204).end()
+        }
+        const err = new Error('Todo not found');
+        err.statusCode = 404;
+        next(err);
+    }, next);
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {

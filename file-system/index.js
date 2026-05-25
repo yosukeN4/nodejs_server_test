@@ -33,7 +33,7 @@ exports.update = async (id, updates) => {
     );
 };
 
-exports.delete = (id) => {
+exports.remove = (id) => {
     unlink(`${__dirname}/${id}.json}`)
     .then(
         () => id,
