@@ -74,18 +74,20 @@ app.route('/api/todos/:id/completed')
 
 // delete a TODO
 app.delete('/api/todos/:id', (req, res, next) => {
+    console.log("Received ID is: " + req.params.id);
     dataStorage.remove(req.params.id).then(id => {
         if (id !== null) {
-            res.status(204).end()
+            return res.status(204).end()
         }
         const err = new Error('Todo not found');
         err.statusCode = 404;
         next(err);
-    }, next);
-});
+    }, next)
+})
 
 // Error handling middleware
 app.use((err, req, res, next) => {
+    console.log("checkpoint here.")
     console.error(err);
     res.status(err.statusCode || 500).json({ error: err.message });
 });

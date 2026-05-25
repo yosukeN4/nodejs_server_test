@@ -34,10 +34,10 @@ exports.update = async (id, updates) => {
 };
 
 exports.remove = (id) => {
-    unlink(`${__dirname}/${id}.json}`)
+    console.log("request arrived. this layer.")
+    return unlink(`${__dirname}/${id}.json`)
     .then(
         () => id,
         // if the file doesn't exist, return null, otherwise propagate the error
         err => err.code === 'ENOENT' ? null : Promise.reject(err)
-    )
-}
+    )}
