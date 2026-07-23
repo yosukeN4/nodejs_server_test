@@ -18,9 +18,13 @@ jobs:
         - name: Unittest
           run: npx mocha
 
+        - name: Setup Terraform	
+          uses: hashicorp/setup-terraform@v3
+          with:
+            terraform_version: 1.15.0
+            
         - name: Check terraform is available
           run: terraform -version
-
 
         # 1. Postman CLIのキャッシュを復元・保存
         # /usr/local/bin 等にインストールされるため、そのパスを指定
