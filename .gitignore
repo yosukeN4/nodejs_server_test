@@ -1,3 +1,4 @@
 node_modules
 textbook_clone
 .nyc_output
+.secrets

@@ -1,7 +1,7 @@
 name: cicd for nest project.
 on: push
 jobs:
-  hello:
+  build_and_test:
     runs-on: ubuntu-latest
     steps:
         - name: Checkout code
@@ -12,8 +12,8 @@ jobs:
           with:
             node-version: 24
 
-        - name: Check bash is available
-          run: echo "Hora el Mundo!"
+        - name: Build app to unittest
+          run: npm run build:dev
 
-        - name: Check Node.js version
-          run: node -v  
+        - name: Unittest
+          run: npx mocha

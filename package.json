@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build:dev": "npm install",
+    "build:prod": "npm install --omit=dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:dev": "npm run test dev",
     "start": "node --watch server",
