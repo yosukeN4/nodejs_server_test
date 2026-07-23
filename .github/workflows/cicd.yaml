@@ -1,0 +1,19 @@
+name: cicd for nest project.
+on: push
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: 24
+
+        - name: Check bash is available
+          run: echo "Hora el Mundo!"
+
+        - name: Check Node.js version
+          run: node -v  
