@@ -17,3 +17,26 @@ jobs:
 
         - name: Unittest
           run: npx mocha
+
+        - name: Check terraform is available
+          run: terraform -version
+
+
+        # 1. Postman CLIのキャッシュを復元・保存
+        # /usr/local/bin 等にインストールされるため、そのパスを指定
+        - name: Cache Postman CLI
+          id: cache-postman-cli
+          uses: actions/cache@v4
+          with:
+            path: /usr/local/bin/postman
+            key: ${{ runner.os }}-postman-cli
+
+        # 2. キャッシュがない場合のみPostman CLIをインストール
+        - name: Install Postman CLI
+          if: steps.cache-postman-cli.outputs.cache-hit != 'true'
+          run: |
+            curl -o- "https://dl-cli.pstmn.io/install/unix.sh" | sh
+        - name: Check postma cli is available
+          run: postman -v 
+        # - name: Run Postman tests
+        #   run: postman test "tests/postman_collection.json" --environment "tests/postman_environment.json"
